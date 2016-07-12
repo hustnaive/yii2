@@ -8,15 +8,15 @@
 > Info: 当我们说"一个应用"，它可能是一个应用主体对象，也可能是一个应用系统，
   是根据上下文来决定[译：中文为避免歧义，Application翻译为应用主体]。
 
-Yii有两种应用主体: [[yii\web\Application|网页应用主体]] and
-[[yii\console\Application|控制台应用主体]]， 
-如名称所示，前者主要处理网页请求，后者处理控制台请求。
+Yii有两种应用主体: [[yii\web\Application|网页应用主体]] 和
+[[yii\console\Application|控制台应用主体]]，
+顾名思义，前者主要处理网页请求，后者处理控制台请求。
 
 
 ## 应用主体配置 <span id="application-configurations"></span>
 
-如下所示，当 [入口脚本](structure-entry-scripts.md) 创建了一个应用主体，
-它会加载一个 [配置](concept-configurations.md) 文件并传给应用主体。
+当 [入口脚本](structure-entry-scripts.md) 创建了一个应用主体，
+它会加载一个 [配置](concept-configurations.md) 文件并应用于应用主体。示例如下：
 
 ```php
 require(__DIR__ . '/../vendor/autoload.php');
@@ -32,15 +32,15 @@ $config = require(__DIR__ . '/../config/web.php');
 类似其他 [配置](concept-configurations.md) 文件,
 应用主体配置文件标明如何设置应用对象初始属性。
 由于应用主体配置比较复杂，
-一般保存在多个类似如上web.php的 [配置文件](concept-configurations.md#configuration-files) 当中。
+一般保存在类似如上web.php的 [配置文件](concept-configurations.md#configuration-files) 当中。
 
 
 ## 应用主体属性 <span id="application-properties"></span>
 
 应用主体配置文件中有许多重要的属性要配置，
-这些属性指定应用主体的运行环境。
+这些属性指定了应用主体的运行环境。
 比如，应用主体需要知道如何加载 [控制器](structure-controllers.md) ，
-临时文件保存到哪儿等等。以下我们简述这些属性。
+临时文件保存到哪儿等等。以下我们概括性的介绍这些属性。
 
 
 ### 必要属性 <span id="required-properties"></span>
@@ -52,24 +52,24 @@ $config = require(__DIR__ . '/../config/web.php');
 #### [[yii\base\Application::id|id]] <span id="id"></span>
 
 [[yii\base\Application::id|id]] 属性用来区分其他应用的唯一标识ID。
-主要给程序使用。为了方便协作，最好使用数字作为应用主体ID，
-但不强制要求为数字。
+主要给程序使用。为了方便协作，最好使用字母或数字作为应用主体ID，
+但不强制要求。
 
 
 #### [[yii\base\Application::basePath|basePath]] <span id="basePath"></span>
 
-[[yii\base\Application::basePath|basePath]] 指定该应用的根目录。
+[[yii\base\Application::basePath|basePath]] 指定一个应用的根目录。
 根目录包含应用系统所有受保护的源代码。
-在根目录下可以看到对应MVC设计模式的`models`, 
-`views`, `controllers`等子目录。
+在根目录下可以看到对应 MVC 设计模式的 `models`,
+`views`, `controllers` 等子目录。
 
 可以使用路径或 [路径别名](concept-aliases.md) 来在配置 [[yii\base\Application::basePath|basePath]] 属性。
-两种格式所对应的目录都必须存在，否则系统会抛出一个异常。 
+两种格式所对应的目录都必须存在，否则系统会抛出一个异常。
 系统会使用 `realpath()` 函数规范化配置的路径.
 
-[[yii\base\Application::basePath|basePath]] 属性经常用于派生一些其他重要路径（如runtime路径），
+[[yii\base\Application::basePath|basePath]] 属性经常用于派生一些其他重要路径（如 runtime 路径），
 因此，系统预定义 `@app` 代表这个路径。
-派生路径可以通过这个别名组成（如`@app/runtime`代表runtime的路径）。
+派生路径可以通过这个别名组成（如`@app/runtime`代表 runtime 的路径）。
 
 
 ### 重要属性 <span id="important-properties"></span>
@@ -100,17 +100,17 @@ $config = require(__DIR__ . '/../config/web.php');
 #### [[yii\base\Application::bootstrap|bootstrap]] <span id="bootstrap"></span>
 
 这个属性很实用，它允许你用数组指定启动阶段
-[[yii\base\Application::bootstrap()|bootstrapping process]]需要运行的组件。
+[[yii\base\Application::bootstrap()|bootstrapping process]] 需要运行的组件。
 比如，如果你希望一个 [模块](structure-modules.md) 自定义 [URL 规则](runtime-url-handling.md)，
 你可以将模块ID加入到bootstrap数组中。
 
-属性中的每个组件需要指定以下一项:
+属性中的每个组件可以以如下形式之一指定:
 
-- 应用 [组件](#components) ID.
-- [模块](#modules) ID.
-- 类名.
-- 配置数组.
-- 创建并返回一个组件的无名称函数.
+- 一个应用 [组件](#components) ID 。
+- 一个 [模块](#modules) ID 。
+- 一个类名。
+- 一个配置数组。
+- 一个创建并返回一个组件的匿名函数。
 
 例如：
 
@@ -129,7 +129,7 @@ $config = require(__DIR__ . '/../config/web.php');
             'level' => 3,
         ],
 
-        // 无名称函数
+        // 匿名函数
         function () {
             return new app\components\Profiler();
         }
@@ -139,8 +139,8 @@ $config = require(__DIR__ . '/../config/web.php');
 
 > Info: 如果模块ID和应用组件ID同名，
 > 优先使用应用组件ID，如果你想用模块ID，
-> 可以使用如下无名称函数返回模块ID。
-> 
+> 可以使用如下匿名函数返回模块对象。
+>
 > ```php
 [
     function () {
@@ -155,8 +155,8 @@ $config = require(__DIR__ . '/../config/web.php');
 也会调用 [[yii\base\BootstrapInterface::bootstrap()|bootstrap()]] 方法。
 
 举一个实际的例子，
-[Basic Application Template](start-installation.md) 应用主体配置中，
-开发环境下会在启动阶段运行 `debug` 和 `gii` 模块。
+在 [Basic Application Template](start-installation.md) 应用主体配置中，
+当应用运行在开发环境下，模块 `debug` 和 `gii` 被配置为启动运行组件。
 
 ```php
 if (YII_ENV_DEV) {
@@ -487,7 +487,7 @@ $width = \Yii::$app->params['thumbnail.size'][0];
 
 #### [[yii\console\Application::enableCoreCommands|enableCoreCommands]] <span id="enableCoreCommands"></span>
 
-该属性仅 [[yii\console\Application|console applications]] 控制台应用支持， 
+该属性仅 [[yii\console\Application|console applications]] 控制台应用支持，
 用来指定是否启用Yii中的核心命令，默认值为 `true`。
 
 
@@ -504,7 +504,7 @@ $width = \Yii::$app->params['thumbnail.size'][0];
 ]
 ```
 
-`on eventName` 语法的用法在 [Configurations](concept-configurations.md#configuration-format) 
+`on eventName` 语法的用法在 [Configurations](concept-configurations.md#configuration-format)
 一节有详细描述.
 
 另外，在应用主体实例化后，你可以在[引导启动](runtime-bootstrapping.md) 阶段附加事件处理代码，
@@ -559,7 +559,7 @@ $width = \Yii::$app->params['thumbnail.size'][0];
 
 注意 [模块](structure-modules.md) 和 [控制器](structure-controllers.md) 都会触发 `beforeAction` 事件。
 应用主体对象首先触发该事件，然后模块触发（如果存在模块），最后控制器触发。
-任何一个事件处理中设置 [[yii\base\ActionEvent::isValid]] 
+任何一个事件处理中设置 [[yii\base\ActionEvent::isValid]]
 设置为 `false` 会停止触发后面的事件。
 
 
@@ -583,7 +583,7 @@ $width = \Yii::$app->params['thumbnail.size'][0];
 ]
 ```
 
-注意 [模块](structure-modules.md) 和 [控制器](structure-controllers.md) 
+注意 [模块](structure-modules.md) 和 [控制器](structure-controllers.md)
 都会触发 `afterAction` 事件。
 这些对象的触发顺序和 `beforeAction` 相反，也就是说，控制器最先触发，
 然后是模块（如果有模块），最后为应用主体。
