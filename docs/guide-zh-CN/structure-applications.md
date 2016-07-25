@@ -142,12 +142,12 @@ $config = require(__DIR__ . '/../config/web.php');
 > 可以使用如下匿名函数返回模块对象。
 >
 > ```php
-[
-    function () {
-        return Yii::$app->getModule('user');
-    },
-]
-```
+> [
+>    function () {
+>        return Yii::$app->getModule('user');
+>    },
+> ]
+> ```
 
 
 在启动阶段，每个组件都会实例化。
@@ -192,12 +192,12 @@ if (YII_ENV_DEV) {
 ]
 ```
 
-> Info: Debug panel on development environment will not work when this property is enabled
+> 注意: 开发环境下的调试面板将不会运行，如果同时这个属性被设置的话。
 
 #### [[yii\base\Application::components|components]] <span id="components"></span>
 
-这是最重要的属性，它允许你注册多个在其他地方使用的[应用组件](#structure-application-components.md)。
-例如
+这是最重要的属性，它允许你注册多个可以在其他地方以名称使用的 [应用组件](#structure-application-components.md)。
+例如：
 
 ```php
 [
@@ -224,11 +224,11 @@ value代表组件类名或 [配置](concept-configurations.md)。
 
 #### [[yii\base\Application::controllerMap|controllerMap]] <span id="controllerMap"></span>
 
-该属性允许你指定一个控制器ID到任意控制器类。
-Yii遵循一个默认的 [规则](#controllerNamespace)指定控制器ID到任意控制器类（如`post`对应`app\controllers\PostController`）。
-通过配置这个属性，可以打破这个默认规则，在下面的例子中，
-`account`对应到`app\controllers\UserController`，
-`article` 对应到 `app\controllers\PostController`。
+该属性允许你将一个控制器ID映射到任意控制器类。
+Yii遵循一个默认的 [约定](#controllerNamespace) 来映射控制器ID和控制器类（如 `post` 对应 `app\controllers\PostController`）。
+通过配置这个属性，可以打破这个默认约定，在下面的例子中，
+`account` 被映射到 `app\controllers\UserController`，
+`article` 被映射到 `app\controllers\PostController`。（译注：原 `post`, `user` 应该不会改变，如果带module了会怎么样呢？）
 
 ```php
 [
@@ -245,16 +245,16 @@ Yii遵循一个默认的 [规则](#controllerNamespace)指定控制器ID到任�
 ```
 
 数组的键代表控制器ID，
-数组的值代表对应的类名。
+数组的值代表对应的类名，或 [配置](concept-configurations.md)。
 
 
 #### [[yii\base\Application::controllerNamespace|controllerNamespace]] <span id="controllerNamespace"></span>
 
-该属性指定控制器类默认的命名空间，默认为`app\controllers`。
+该属性指定控制器类加载的默认命名空间，默认为 `app\controllers`。
 比如控制器ID为 `post` 默认对应 `PostController` （不带命名空间），
 类全名为 `app\controllers\PostController`。
 
-控制器类文件可能放在这个命名空间对应目录的子目录下，
+控制器类文件同样可以放在某个命名空间对应目录的子目录下，
 例如，控制器ID `admin/post` 对应的控制器类全名为
 `app\controllers\admin\PostController`。
 
@@ -262,7 +262,7 @@ Yii遵循一个默认的 [规则](#controllerNamespace)指定控制器ID到任�
 控制器类的实际命名空间对应这个属性，
 否则，访问时你会收到"Page Not Found"[译：页面找不到]。
 
-如果你想打破上述的规则，
+如果你想打破上述的约定，
 可以配置 [controllerMap](#controllerMap) 属性。
 
 
