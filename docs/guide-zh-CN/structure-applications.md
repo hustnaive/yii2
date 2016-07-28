@@ -268,16 +268,16 @@ Yii遵循一个默认的 [约定](#controllerNamespace) 来映射控制器ID和�
 
 #### [[yii\base\Application::language|language]] <span id="language"></span>
 
-该属性指定应用展示给终端用户的语言，
+该属性指定应用以何种语言展示内容给终端用户，
 默认为 `en` 标识英文。
-如果需要之前其他语言可以配置该属性。
+你可以配置该属性以支持多国语言。
 
-该属性影响各种 [国际化](tutorial-i18n.md) ，
+该属性影响各种 [国际化](tutorial-i18n.md) 应用组件，
 包括信息翻译、日期格式、数字格式等。
 例如 [[yii\jui\DatePicker]] 小部件会
 根据该属性展示对应语言的日历以及日期格式。
 
-推荐遵循 [IETF language tag](http://en.wikipedia.org/wiki/IETF_language_tag) 来设置语言，
+推荐遵循 [IETF 语言标签](http://en.wikipedia.org/wiki/IETF_language_tag) 来设置语言，
 例如 `en` 代表英文， `en-US` 代表英文(美国)。
 
 该属性的更多信息可参考 [国际化](tutorial-i18n.md) 一节.
@@ -287,8 +287,8 @@ Yii遵循一个默认的 [约定](#controllerNamespace) 来映射控制器ID和�
 
 该属性指定应用所包含的 [模块](structure-modules.md)。
 
-该属性使用数组包含多个模块类 [配置](concept-configurations.md)，
-数组的键为模块ID，例：
+该属性是一个数组，其key为模块ID，值为模块类名或者一个
+ [配置](concept-configurations.md) 数组，例：
 
 ```php
 [
@@ -312,17 +312,17 @@ Yii遵循一个默认的 [约定](#controllerNamespace) 来映射控制器ID和�
 
 该属性指定你可能想展示给终端用户的应用名称，
 不同于需要唯一性的 [[yii\base\Application::id|id]] 属性，
-该属性可以不唯一，该属性用于显示应用的用途。
+该属性主要用于显示的用途，可以不唯一。
 
 如果其他地方的代码没有用到，可以不配置该属性。
 
 
 #### [[yii\base\Application::params|params]] <span id="params"></span>
 
-该属性为一个数组，指定可以全局访问的参数，
-代替程序中硬编码的数字和字符，
-应用中的参数定义到一个单独的文件并随时可以访问是一个好习惯。
-例如用参数定义缩略图的长宽如下：
+该属性为一个数组，指定可以全局访问的参数。
+与程序中到处硬编码的数字和字符相比，
+将应用中的参数定义到一个单独的地方并在需要的时候用参数访问是一个好习惯。
+例如，你可以如下定义缩略图的尺寸作为一个参数：
 
 ```php
 [
@@ -332,21 +332,21 @@ Yii遵循一个默认的 [约定](#controllerNamespace) 来映射控制器ID和�
 ]
 ```
 
-然后简单的使用如下代码即可获取到你需要的长宽参数：
+然后在你需要使用尺寸的地方，你可以简单的使用如下代码：
 
 ```php
 $size = \Yii::$app->params['thumbnail.size'];
 $width = \Yii::$app->params['thumbnail.size'][0];
 ```
 
-以后想修改缩略图长宽，
-只需要修改该参数而不需要相关的代码。
+你以后如果希望修改缩略图尺寸，
+你只需要修改应用配置中的参数，而不需要触及任何相关代码。
 
 
 #### [[yii\base\Application::sourceLanguage|sourceLanguage]] <span id="sourceLanguage"></span>
 
-该属性指定应用代码的语言，默认为 `'en-US'` 标识英文（美国），
-如果应用不是英文请修改该属性。
+该属性指定应用源代码的语言，默认为 `'en-US'` 标识英文（美国），
+如果应用代码中的文本（注释等）不是英文的话，请修改该属性。
 
 和 [语言](#language) 属性类似，
 配置该属性需遵循 [IETF language tag](http://en.wikipedia.org/wiki/IETF_language_tag).
@@ -357,7 +357,7 @@ $width = \Yii::$app->params['thumbnail.size'][0];
 
 #### [[yii\base\Application::timeZone|timeZone]] <span id="timeZone"></span>
 
-该属性提供一种方式修改PHP运行环境中的默认时区，配置该属性本质上就是调用PHP函数
+该属性提供另一种方式以修改PHP运行环境中的默认时区，配置该属性本质上就是调用PHP函数
 [date_default_timezone_set()](http://php.net/manual/en/function.date-default-timezone-set.php)，
 例如：
 
@@ -376,8 +376,8 @@ $width = \Yii::$app->params['thumbnail.size'][0];
 
 ### 实用属性 <span id="useful-properties"></span>
 
-本小节描述的属性不经常设置，通常使用系统默认值。
-如果你想改变默认值，可以配置这些属性。
+本小节描述的属性不经常设置，因为这些属性都有一般的约定值。
+如果你可能需要打破约定，也可以配置这些属性。
 
 
 #### [[yii\base\Application::charset|charset]] <span id="charset"></span>
