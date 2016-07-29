@@ -383,29 +383,29 @@ $width = \Yii::$app->params['thumbnail.size'][0];
 #### [[yii\base\Application::charset|charset]] <span id="charset"></span>
 
 该属性指定应用使用的字符集，默认值为 `'UTF-8'`，
-绝大部分应用都在使用，除非已有的系统大量使用非unicode数据才需要更改该属性。
+绝大部分应该保持这个属性为默认值，除非已有的系统大量使用非unicode数据才需要更改该属性。
 
 
 #### [[yii\base\Application::defaultRoute|defaultRoute]] <span id="defaultRoute"></span>
 
-该属性指定未配置的请求的响应 [路由](runtime-routing.md) 规则，
+该属性指定一个请求没有匹配到任何控制器路由时的响应 [路由](runtime-routing.md) 规则，
 路由规则可能包含模块ID，控制器ID，动作ID。
 例如`help`, `post/create`, `admin/post/create`，如果动作ID没有指定，
-会使用[[yii\base\Controller::defaultAction]]中指定的默认值。
+会使用 [[yii\base\Controller::defaultAction]] 中指定的默认值。
 
-对于 [[yii\web\Application|Web applications]] 网页应用，
-默认值为 `'site'` 对应 `SiteController` 控制器，并使用默认的动作。
+对于 [[yii\web\Application|Web applications]] 网页应用而言，
+默认路由为 `'site'` 对应 `SiteController` 控制器，并使用默认的动作。
 因此你不带路由的访问应用，默认会显示 `app\controllers\SiteController::actionIndex()` 的结果。
 
-对于 [[yii\console\Application|console applications]] 控制台应用，
-默认值为 `'help'` 对应 [[yii\console\controllers\HelpController::actionIndex()]]。
-因此，如果执行的命令不带参数，默认会显示帮助信息。
+对于 [[yii\console\Application|console applications]] 控制台应用而言，
+默认路由为 `'help'` 对应于系统命令 [[yii\console\controllers\HelpController::actionIndex()]]。
+因此，如果执行的 `yii` 命令不带参数，默认会显示帮助信息。
 
 
 #### [[yii\base\Application::extensions|extensions]] <span id="extensions"></span>
 
 该属性用数组列表指定应用安装和使用的 [扩展](structure-extensions.md)，
-默认使用`@vendor/yiisoft/extensions.php`文件返回的数组。
+默认使用 `@vendor/yiisoft/extensions.php` 文件返回的数组。
 当你使用 [Composer](http://getcomposer.org) 安装扩展，`extensions.php` 会被自动生成和维护更新。
 所以大多数情况下，不需要配置该属性。
 
@@ -430,9 +430,9 @@ $width = \Yii::$app->params['thumbnail.size'][0];
 ]
 ```
 
-如上所示，该属性包含一个扩展定义数组，每个扩展为一个包含 `name` 和 `version` 项的数组。
+如上所示，该属性包含一个扩展定义数组，每个扩展定义为一个包含 `name` 和 `version` 项的数组。
 如果扩展要在 [引导启动](runtime-bootstrapping.md) 阶段运行，
-需要配置 `bootstrap`以及对应的引导启动类名或 [configuration](concept-configurations.md) 数组。
+需要配置 `bootstrap` 以及对应的引导启动类名或 [configuration](concept-configurations.md) 数组。
 扩展也可以定义 [别名](concept-aliases.md)
 
 
@@ -461,34 +461,34 @@ $width = \Yii::$app->params['thumbnail.size'][0];
 默认值为带别名的 `@app/runtime`。
 
 可以配置该属性为一个目录或者路径 [别名](concept-aliases.md)，
-注意应用运行时有对该路径的写入权限，
-以及终端用户不能访问该路径因为临时文件可能包含一些敏感信息。
+注意应用运行的进程用户有对该路径的写入权限，
+以及终端用户不能访问该路径，因为临时文件可能包含一些敏感信息。
 
 为了简化访问该路径，Yii预定义别名 `@runtime` 代表该路径。
 
 
 #### [[yii\base\Application::viewPath|viewPath]] <span id="viewPath"></span>
 
-该路径指定视图文件的根目录，默认值为带别名的 `@app/views`，
-可以配置它为一个目录或者路径 [别名](concept-aliases.md).
+该路径指定视图文件的根目录，默认值为别名 `@app/views` 指代的路径，
+可以配置它为某个目录或者路径 [别名](concept-aliases.md).
 
 
 #### [[yii\base\Application::vendorPath|vendorPath]] <span id="vendorPath"></span>
 
-该属性指定 [Composer](http://getcomposer.org) 管理的供应商路径，
-该路径包含应用使用的包括 Yii 框架在内的所有第三方库。
-默认值为带别名的 `@app/vendor` 。
+该属性指定由 [Composer](http://getcomposer.org) 管理的扩展所在的路径，
+该路径包含应用使用的包括 Yii 框架在内的所有第三方类库。
+默认值为别名 `@app/vendor` 指代的路径。
 
 可以配置它为一个目录或者路径 [别名](concept-aliases.md)，当你修改时，
-务必修改对应的 Composer 配置。
+务必确认对应的 Composer 配置也进行了正确调整。
 
-为了简化访问该路径，Yii预定义别名 `@vendor` 代表该路径。
+为了简化访问该路径，Yii 预定义别名 `@vendor` 代表该路径。
 
 
 #### [[yii\console\Application::enableCoreCommands|enableCoreCommands]] <span id="enableCoreCommands"></span>
 
 该属性仅 [[yii\console\Application|console applications]] 控制台应用支持，
-用来指定是否启用Yii中的核心命令，默认值为 `true`。
+用来指定是否启用 Yii 中的核心命令（ 译注：help, message, cache 等系列），默认值为 `true`。
 
 
 ## 应用事件 <span id="application-events"></span>
@@ -508,7 +508,7 @@ $width = \Yii::$app->params['thumbnail.size'][0];
 一节有详细描述.
 
 另外，在应用主体实例化后，你可以在[引导启动](runtime-bootstrapping.md) 阶段附加事件处理代码，
-例如：
+例如： （译注：这段示例有点问题）
 
 ```php
 \Yii::$app->on(\yii\base\Application::EVENT_BEFORE_REQUEST, function ($event) {
