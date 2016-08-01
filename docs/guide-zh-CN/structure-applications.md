@@ -518,28 +518,28 @@ $width = \Yii::$app->params['thumbnail.size'][0];
 
 ### [[yii\base\Application::EVENT_BEFORE_REQUEST|EVENT_BEFORE_REQUEST]] <span id="beforeRequest"></span>
 
-该事件在应用处理请求*before*之前，实际的事件名为 `beforeRequest`。
+该事件在应用处理请求 *before* 之前，实际的事件名为 `beforeRequest`。
 
-在事件触发前，应用主体已经实例化并配置好了，
-所以通过事件机制将你的代码嵌入到请求处理过程中非常不错。
-例如在事件处理中根据某些参数动态设置[[yii\base\Application::language]]语言属性。
+在事件触发时，应用主体已经配置好并实例化完毕了。
+所以，这里是一个好的地方供你通过事件机制将自定义代码嵌入以拦截请求处理。
+例如，你可以在事件处理中根据某些参数动态设置[[yii\base\Application::language]]语言属性。
 
 
 ### [[yii\base\Application::EVENT_AFTER_REQUEST|EVENT_AFTER_REQUEST]] <span id="afterRequest"></span>
 
-该事件在应用处理请求*after*之后但在返回响应*before*之前触发，
-实际的事件名为`afterRequest`。
+该事件在应用处理请求 *之后* 但在返回响应 *之前* 触发，
+实际的事件名为 `afterRequest`。
 
 该事件触发时，请求已经被处理完，
-可以做一些请求后处理或自定义响应。
+你可以做一些请求后处理操作或自定义请求响应。
 
 注意 [[yii\web\Response|response]] 组件在发送响应给终端用户时也会触发一些事件，
-这些事件都在本事件*after*之后触发。
+这些事件都在本事件 *之后* 触发。
 
 
 ### [[yii\base\Application::EVENT_BEFORE_ACTION|EVENT_BEFORE_ACTION]] <span id="beforeAction"></span>
 
-该事件在每个 [控制器动作](structure-controllers.md) 运行*before*之前会被触发，
+该事件在每个 [控制器动作](structure-controllers.md) 运行 *之前* 会被触发，
 实际的事件名为 `beforeAction`.
 
 事件的参数为一个 [[yii\base\ActionEvent]] 实例，
@@ -598,15 +598,15 @@ $width = \Yii::$app->params['thumbnail.size'][0];
 
 1. 入口脚本加载应用主体配置数组。
 2. 入口脚本创建一个应用主体实例：
-  * 调用 [[yii\base\Application::preInit()|preInit()]] 配置几个高级别应用主体属性，
-    比如[[yii\base\Application::basePath|basePath]]。
+  * 调用 [[yii\base\Application::preInit()|preInit()]] 配置几个高优先级应用主体属性，
+    比如 [[yii\base\Application::basePath|basePath]]。
   * 注册 [[yii\base\Application::errorHandler|error handler]] 错误处理方法.
   * 配置应用主体属性.
-  * 调用 [[yii\base\Application::init()|init()]] 初始化，
-    该函数会调用 [[yii\base\Application::bootstrap()|bootstrap()]] 运行引导启动组件.
+  * 调用 [[yii\base\Application::init()|init()]] 初始化方法，
+    该方法会继续调用 [[yii\base\Application::bootstrap()|bootstrap()]] 运行引导启动组件.
 3. 入口脚本调用 [[yii\base\Application::run()]] 运行应用主体:
   * 触发 [[yii\base\Application::EVENT_BEFORE_REQUEST|EVENT_BEFORE_REQUEST]] 事件。
-  * 处理请求：解析请求 [路由](runtime-routing.md) 和相关参数；
+  * 处理请求：解析请求到一个 [路由](runtime-routing.md) 并关联相关参数；
     创建路由指定的模块、控制器和动作对应的类，并运行动作。
   * 触发 [[yii\base\Application::EVENT_AFTER_REQUEST|EVENT_AFTER_REQUEST]] 事件。
   * 发送响应到终端用户.
